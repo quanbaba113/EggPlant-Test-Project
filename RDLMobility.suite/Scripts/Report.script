@@ -1,0 +1,139 @@
+﻿(* Report.script
+ *
+ * Description:
+ * This script is for generating the report in HTML format
+
+* * Global Variables:  Variables passed across script
+*                          atrecovery: Variable to check if attempt recovery is made or not if there was an exception
+*                         execid : Execution id used in HTML report generation
+*                          statusid: Status id used in HTML report generation
+ * 
+ *Report.script
+
+*********************************************************************)
+global atrecovery,statusid,execid
+
+Function ReportHeader
+
+	
+	// Create html file by prefixing the current time stamp
+	Put the date into rundate
+	
+	replace "/" in rundate by ""
+	
+	Put the time into runtime
+	
+	replace " " in runtime by ""
+	
+	Replace ":" in runtime by ""
+	
+	Put the date into executiondate
+	
+	Put the time into executiontime
+	
+	Put  "C:\Results\Testreport_"& rundate & runtime &".html" into filename
+	
+	// Creating the HTML report file
+	set file filename to "<Title> RDL MOBILITY AUTOMATION</Title> <h1 style=Color:Black;font-family:HPsimplified;text-align:center;background:33B7F0> Automation Test report </h1><body style=Background-color:lightgrey><form style=font-family:Calibri ><label style=font-family:Calibri><b>Product Family</b></label><input type=text name=Productfamily value=VEP><label style=font-family:Calibri><b>ExecutionDate</b></label><input type=text name=Productfamily value="&executiondate&"><label style=font-family:Calibri><b>Execution Start Time</b></label><input type=text name=Productfamily value="&executiontime&"><table border=1 style = width:100%;text-align:center;font-family:Calibri><tr style=background-color:33B7F0><td><b>Asset</b></td><td><b>Connectivity</b></td><td><b>Device</b></td></td><td><b>Printername</b></td><td><b>Filename</b></td><td><b>Default Print Settings</b></td><td><b> Execution status </b></td></tr>" 
+	
+	return filename
+	
+	
+End ReportHeader
+
+
+// Append data to the report
+Function LogonReport Filepath,asset,connectivity,Devicename,PrinterName,FileName,DefaultPrintSetting
+	Open file Filepath for appending 
+	write "<tr><td>"&asset&"</td><td>"&connectivity&"<td>"&Devicename&"</td><td>"&PrinterName&"</td><td>"&FileName&"</td><td>"&DefaultPrintSetting&"</td> " to file Filepath
+	
+End LogonReport
+
+
+Function Logoverwritestatus Filepath,value2,statusid
+
+	Open file Filepath for appending 
+	//write "<script>function myfunc(){document.getElementById('statusid').innerHTML=PASS}</script> " to file Filepath
+	
+	write "<script>" to file Filepath
+	//write  "document.getElementById('statusid').innerHTML='"&value2&"'" to file Filepath
+	write  "document.getElementById('"&statusid&"').innerHTML='"&value2&"'" to file Filepath
+	write "</script>" to file Filepath
+	write "</tr>"  to file Filepath
+	
+	
+End Logoverwritestatus
+
+Function Logstatus Filepath,value1
+	Put the time into statustm
+	
+	Put  "id" & statustm into statusid
+	
+	Open file Filepath for appending 
+	//write  "<td id = 'statusid'> "&value1&"</td>" to file Filepath
+	write  "<td id = '"&statusid&"'> "&value1&"</td>" to file Filepath
+	write "</tr>"  to file Filepath
+	return statusid
+	
+	
+End Logstatus
+
+
+
+Function ExecutionEndtime Filepath
+
+	
+	Put the time into Endtime
+	
+	Put the time into statustm
+	
+	Put  "id" & exectm into execid
+	
+	Open file Filepath for appending
+	
+	
+	
+	write "<label style=font-family:Calibri><b>Execution End Time</b></label><input id ='"&execid&"' type=text name=Productfamily value='"&Endtime&"'><br><br></form>" to file Filepath
+	
+	return execid
+	
+	
+	
+End ExecutionEndtime
+
+
+
+
+Function ReportFooter Filepath
+	
+	Open file Filepath for appending 
+	
+	write "</table><br><br><br><div style=background-color:33B7F0;Font-family:calibri;text-align:center><b>Copyrights By Hewlett Packard Inc</b></div>" to file Filepath
+	
+	
+	
+End ReportFooter 
+
+
+//Overwrite the execution end time
+Function ExecutionOWEndtime Filepath, execid
+
+	
+	Put the time into Endtime
+	
+	Open file Filepath for appending
+	write "<script>" to file Filepath
+	write  "document.getElementById('"&execid&"').value='"&Endtime&"'" to file Filepath
+	write "</script>" to file Filepath
+	
+End ExecutionOWEndtime
+
+
+
+
+
+
+
+
+
+

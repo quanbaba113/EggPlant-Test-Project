@@ -1,0 +1,69 @@
+﻿(* SelectPrinterPlugin.script
+ *
+ * Description:
+ * This script is to add the specified printer for HP Print *ServicePlugin
+ * 
+ *  Parameters:
+ *  connectivity,printerdetail
+ * 
+ *****************************************************************
+*SelectPrinterPlugin.script*)
+
+params connectivity,printerdetail
+global Devicename,PrinterName
+
+
+
+put  Devicename & "/Printer/plugin_ssid" & PrinterName into SSIDname
+
+log " in select printer plugin script"
+waitfor 80,"Collection/Printerlist"
+log "before clicking dropdown"
+click "Collection/Printerlist" // click on printers dropdown list
+//click "N7/plugin/Allprinters"
+//wait 5
+//log "before clicking all printers"
+//click (text: PrinterName)
+
+
+//if Devicename is S6
+//click (1020,210) // search co-ordinates
+//else if Devicename is N9
+//click "N9/plugin/Photos/search"//search co -ordinate
+//else if Devicename is N7
+//click "N9/plugin/Photos/search"//search co -ordinate
+//end if
+//wait 1
+
+//typetext PrinterName
+
+//if connectivity is "Ethernet"
+//Click "S6/plugin/Allprinters"
+//if Devicename is "S6"
+//	log "devicename is s6"
+//	click (1020,210) // search co-ordinates
+//	else if Devicename is "N9"
+//	click "N9/plugin/Photos/search"//search co -ordinate
+//else if Devicename is "N7"
+//click "N9/plugin/Photos/search"//search co -ordinate
+//	end if
+//	wait 2
+//Typetext PrinterName
+//click (text:PrinterName)
+//wait 5
+//end if
+wait 10
+//if connectivity is "WifiDirect" or connectivity is "WirelessDirect" then
+//	click  SSIDname
+//	Log SSIDname
+//else 
+click (text:printerdetail)
+
+Log "Connectivity path is " & connectivity & " " & printerdetail
+//Waitfor Print button to get enabled in the screen
+//Log "Wait time to get the Print Option to appear"
+//WaitFor 15,"N7/plugin/Docs/Print"
+wait 6
+
+
+//end if

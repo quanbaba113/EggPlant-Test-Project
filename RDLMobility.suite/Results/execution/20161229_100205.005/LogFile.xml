@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<testsuites>
+ <testsuite name="execution.script" package="RDLMobility.suite" timestamp="2016-12-29 10:02:05.005 +0800"
+ tests="2" successes="0" errors="2" time="183.940000">
+  <properties>
+   <property name="RunDate" value="2016-12-29 10:02:05.005 +0800"/>
+   <property name="Status" value="Failure"/>
+  </properties>
+  <testcase name="Ethernet_MarlinS6HPPrintPlugin4pdf" assertions="2" successes="0" errors="2" time="178.304">
+    <failure type="LogError">Screen captured</failure>
+  </testcase>
+  <testcase name="execution.script" assertions="2" successes="0" errors="2" time="183.924">
+    <failure type="LogError">Screen captured</failure>
+  </testcase>
+ </testsuite>
+</testsuites>

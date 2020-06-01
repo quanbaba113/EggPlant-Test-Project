@@ -1,0 +1,96 @@
+﻿(* SelectApp.script
+ *
+ * Description:
+ * This script finds and selects the user specified App for S6 *and N9
+ * 
+ * 
+ *****************************************************************
+*SelectApp.script*)
+
+
+params appname
+
+global Devicename, PrinterName
+
+
+put Devicename & "/" & Devicename & "Apps" into apps
+
+Log "appname is " & apps
+click apps
+
+//TBD
+If Appname is "Settings"
+	put 	"Collection/Settings" into imagename 
+else if Appname is "Email" and Devicename is "S6" then
+	put "S6/plugin/Email_S6" into imagename
+else if Appname is "Gallery" and Devicename is "S6" then
+	put "S6/plugin/Gallery/Gallery"  into imagename
+else if Appname is "File Manager" and Devicename is "S6" then
+	put "S6/plugin/Filemanager"  into imagename
+else if Appname is "Chrome" and Devicename is "N7" then
+	put "N7/plugin/Chrome" into imagename
+else if Appname is "Email" and Devicename is "N7" then
+	put "N7/plugin/Gmail" into imagename
+	
+	//Updated for Photos when it is N7>>Photos dated 18/10
+else if Appname is "Photos" and Devicename is "N7" then
+	put "N7/plugin/PhotosApp" into imagename
+	//Updated for Photos when it is N7>>Filemanager dated 18/10
+	else if Appname is "File Manager" and Devicename is "N7" then
+	put "N7/plugin/FileManagerApp" into imagename
+	else 
+	put "" into imagename
+end if
+
+
+Log "imagename is " & imagename
+
+if imagename is not ""
+	
+	repeat forever
+		If imagefound(imagename)
+			Click imagename
+			exit repeat
+		else
+			SwipeLeft 
+			Log " Not found"
+		end if
+	end repeat
+	
+	
+	
+else
+	
+	repeat forever
+		if ImageFound (Text:appname)
+			Click (Text:appname)
+			Log "Device" 
+			Log Devicename
+			
+			exit repeat
+			
+		else if imagefound ("S6/HPeprintapp")
+			Click "S6/HPeprintapp"
+			Log "Device" 
+			Log Devicename
+			
+			(*if Devicename is S6 and appname is "HP ePrint"
+				if ImageFound (Text:Location)
+					Click (Text:"Don't Allow")	
+				end if
+			end if*)
+			
+			exit repeat
+		else
+			SwipeLeft 
+			Log " Not found"
+		end if
+	end repeat
+end If
+
+return true
+
+
+
+
+

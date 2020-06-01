@@ -1,0 +1,37 @@
+﻿(* SelectPrinter.script
+ *
+ * Description:
+ * This script is to add the specified printer for HP Eprint App
+ * 
+ *  Parameters:
+ *  Connectivity Path, Printer IP (for Ethernet and Wireless)
+ * 
+ *****************************************************************
+*SelectPrinter.script*)
+params connectivity,ipaddr
+global Devicename,PrinterName
+
+
+
+put  Devicename & "\Printer\ePrintapp_ssid" & PrinterName into SSIDname
+
+if connectivity is "Ethernet" or connectivity is "Wireless" or connectivity is "HPCloud" then
+	log "Connectivity: " & connectivity
+	put "CommonFunctions_" & Devicename into filename
+	put filename.eprintapp_ethernet(ipaddr)
+	return true
+	
+	
+else if connectivity is "Wireless_Direct"  or if connectivity is "WifiDirect" then
+	
+	log "Wireless direct and Wifi direct settings done manually"
+	
+end if	
+
+
+waitfor 300,"Collection/Print"
+
+
+
+
+

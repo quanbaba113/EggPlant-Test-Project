@@ -1,0 +1,138 @@
+﻿(* eprintApp_Workflow_N7.script
+ *
+ * Description:
+ * This script is to handle HP Eprint App Workflows for Photo, Files, Email, Web 
+ * 
+ *  Parameters:
+ *  TBD :Connectivity Path, Printer IP
+ * 
+ *****************************************************************
+*eprintApp_Workflow_N9.script*)
+
+params connectivity,ipaddr
+
+global  Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,execution_status,fname,atrecovery,statusid,execendtime,execid
+
+
+put number of lines in file "C:\tmp\ePrintAppN7.csv" into counter
+log counter
+put 2 into lineno
+repeat lineno to counter
+	put "no" into atrecovery
+	put CommonFunctions.TestDataParsing("C:\tmp\ePrintAppN7.csv",lineno)
+	add 1 to lineno
+	Log "Data from csv is " & Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided
+	
+	if TestExecute is "no"
+		next repeat
+	end if
+	
+	put CommonFunctions.GetTestCaseName(connectivity,PrinterName,Devicename,"HPEPrintApp",FileName) into Name
+	
+	BeginTestCase Name
+	
+	SelectApp "HP ePrint"
+	waitfor 200,"N7/ePrintapp/webActivatedIcon"// Timetaken to get the Web Enabled
+	Click(Text:Workflow)
+	
+	log Folder
+	
+	put Report.LogonReport( fname, "HP ePrint", connectivity,Devicename,PrinterName,FileName,DefaultPrintSetting)
+	
+	if Workflow is "Photos"
+		put "N7/ePrintapp/" & Folder into foldername
+		Click (foldername)
+		put "N7/ePrintapp/TestFiles/Photos/" & FileName into photoname
+		Log photoname
+		Click photoname
+		click (Text:Preview)
+		//waitfor 300,"N7/ePrintapp/PrintSetting/Copies"
+		
+	else if Workflow is "Files"
+		waitfor 300,"N7/ePrintapp/DocsActivatedIcon"// Timetaken to get the Folder Enabled
+		
+		Click (Text:Folder)
+		click (Text:FileName)
+		if Folder is not PDFs
+			Click "N7/ePrintapp/Preview"
+			waitfor 300,"N7/ePrintapp/afterpreview"
+		end if 
+		//waitfor 300,"N7/ePrintapp/PrintSetting/Copies"
+		
+		
+	else if Workflow is "Web"
+		
+		put CommonFunctions_N7.eprintapp_webURL(FileName)
+		//waitfor 300,"N7/ePrintapp/PrintSetting/Copies"
+		
+	else if Workflow is "Email"
+		click (Text:testmail)
+		Click (Text:Automation)
+		put CommonFunctions_N9.eprintapp_EmailPrinting(FileName)
+		//waitfor 300,"N9/ePrintapp/PrintSetting/Copies"
+	end if
+	
+	SelectPrinterePrintApp connectivity,ipaddr
+	
+	if DefaultPrintSetting is "no"
+		
+		if Copies is not ""
+			put CommonFunctions_N7.eprintapp_copies(Copies)
+		end if
+		
+		if PaperSize is not ""
+			put CommonFunctions_N7.eprintapp_PaperType(PaperSize)
+		end if
+		
+		if Quality is not ""
+			put CommonFunctions_N7.eprintapp_ColorQuality(Quality)
+		end if
+		
+		if TwoSided is not ""
+			put CommonFunctions_N7.eprintapp_Duplex(TwoSided)
+		end if
+		
+		
+		if Rotate is not ""
+			put CommonFunctions_N7.eprintapp_rotate(Rotate)
+		end if
+		
+		if Resize is not ""
+			put CommonFunctions_N7.eprintapp_resize(Resize)
+		end if
+		
+		click (Text:"Done")
+		
+	end if
+	
+	
+	
+	
+	Click "Collection/Print"
+	waitfor 120,Text:"Photos"
+	
+	put CommonFunctions.BackButton 
+	
+	put  "PASS" into execution_status
+	
+	// If the exception is handled and the script continues , then the status is updated in the report
+	if atrecovery is "yes"
+		wait 5
+		put Report.Logoverwritestatus( fname, execution_status,statusid) 
+	else
+		put Report.Logstatus( fname, execution_status) into statusid
+		
+	end if
+	
+	//The execution end time is updated in the report
+	if execendtime is "yes"
+		put report.ExecutionOWEndtime (fname,execid)
+	else
+		put report.ExecutionEndtime (fname) into execid
+	end if
+	put "yes" into execendtime
+	
+	EndTestCase Name
+	
+end repeat 
+

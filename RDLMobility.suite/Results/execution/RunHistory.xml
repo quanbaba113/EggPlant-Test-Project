@@ -1,0 +1,63 @@
+﻿<?xml version="1.0"?>
+<runHistory script="execution">
+ <run>
+  <RunDate>2016-12-29 10:02:05.005 +0800</RunDate>
+  <Status>Failure</Status>
+  <Duration>183.000000</Duration>
+  <Errors>2</Errors>
+  <Warnings>1</Warnings>
+  <Exceptions>3</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20161229_100205.005/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage>Image Not Found -- click Error - No Image Found On Screen: &quot;(TEXT:&quot;Print&quot;)&quot;</ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2016-12-29 10:11:58.058 +0800</RunDate>
+  <Status>Failure</Status>
+  <Duration>470.000000</Duration>
+  <Errors>3</Errors>
+  <Warnings>2</Warnings>
+  <Exceptions>4</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20161229_101158.058/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage>Image Not Found -- waitfor Error - Unable To Find Any Image On Screen &quot;Collection/PluginPrint&quot; within 0.30 seconds</ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2016-12-29 10:20:41.041 +0800</RunDate>
+  <Status>Success</Status>
+  <Duration>501.000000</Duration>
+  <Errors>0</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>1</Successes>
+  <LogFile>20161229_102041.041/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2016-12-29 11:02:36.036 +0800</RunDate>
+  <Status>Failure</Status>
+  <Duration>417.000000</Duration>
+  <Errors>2</Errors>
+  <Warnings>1</Warnings>
+  <Exceptions>3</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20161229_110236.036/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage>Image Not Found -- click Error - No Image Found On Screen: &quot;(TEXT:&quot;wang&quot;)&quot;</ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2016-12-29 16:29:05.005 +0800</RunDate>
+  <Status>Failure</Status>
+  <Duration>319.000000</Duration>
+  <Errors>2</Errors>
+  <Warnings>1</Warnings>
+  <Exceptions>3</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20161229_162905.005/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage>Image Not Found -- click Error - No Image Found On Screen: &quot;S6/plugin/Settings/Backspace_S6&quot;</ErrorMessage>
+ </run>
+</runHistory>

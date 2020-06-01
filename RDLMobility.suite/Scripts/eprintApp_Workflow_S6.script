@@ -1,0 +1,179 @@
+﻿(* eprintApp_Workflow_S6.script
+ *
+ * Description:
+ * This script is to handle HP Eprint App Workflows for Photo, Files, Email, Web 
+ * 
+ *  Parameters:
+*   Connectivity Path, Printer IP
+
+* Global variables : Variables read from CSV
+* Global Variables:  Variables passed across script
+*                          execution status : Status which is updated in the report
+*                          fname : Filename in which the report is created
+*                          atrecovery: Variable to check if attempt recovery is made or not if there was an exception
+*                          execendtime: Execution end time (status variable) to check if the endtime to be updated in the report
+*                          execid : Execution id used in HTML report generation
+*                          statusid: Status id used in HTML report generation
+ *****************************************************************
+*eprintApp_Workflow_S6*)
+
+params connectivity,ipaddr
+global Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided, execution_status,fname,atrecovery,statusid,execendtime,execid
+
+// Below code to read data from eprintAppS6 csv and populate the global variables
+put number of lines in file "C:\tmp\ePrintAppS6.csv" into counter
+log " The number of lines in csv file is " & counter
+put 2 into lineno
+repeat lineno to counter
+	put "no" into atrecovery
+	put CommonFunctions.TestDataParsing("C:\tmp\ePrintAppS6.csv",lineno)
+	add 1 to lineno
+	Log "Data from csv is " & Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided
+	
+	
+	if TestExecute is "no"
+		next repeat
+	end if
+	if connectivity is "Wireless_Direct" 
+		if Workflow is "Web" or Workflow is "Email" then
+			log Workflow & " Not supported in this " & connectivity & " path"
+			next repeat
+		end if
+		if Workflow is "Files" 
+			if Folder is not PDFs
+				log Workflow & " Not supported in this " & connectivity & " path"
+				next repeat
+			end if
+		end if
+	end if
+	
+	// This function is called to get the testcase name 
+	put CommonFunctions.GetTestCaseName(connectivity,PrinterName,Devicename,"HPEPrintApp",FileName) into TestcaseName
+	BeginTestCase TestcaseName
+	SelectApp "HP ePrint"
+	wait 2
+	if workflow is "Files" 
+		put "S6/ePrintapp/" & workflow into workflowname
+		click workflowname	
+	else if workflow is "Photos"
+		Click(Text:"Photos")
+	else if workflow is "Email"
+		waitfor 60,"S6/ePrintapp/Cloud"
+		put "S6/ePrintapp/" & workflow into workflowname
+		click workflowname	
+		
+	else
+		waitfor 60,"S6/ePrintapp/Cloud"
+		Click(Text:Workflow)
+	end if
+	
+	log "Workflow is" & Workflow & "Folder is" & Folder
+	
+	
+	put Report.LogonReport( fname, "HP ePrint", connectivity,Devicename,PrinterName,FileName,DefaultPrintSetting)
+	
+	if Workflow is "Photos"
+		
+		put "S6/ePrintapp/TestFiles/Photos/" & Folder into foldername
+		Click foldername
+		put "S6/ePrintapp/TestFiles/Photos/" & FileName into photoname
+		Log photoname
+		Click photoname
+		click (Text:Preview)
+		
+	else if Workflow is "Files"
+		wait 60
+		Click (Text:Folder)
+		log FileName
+		click (Text:FileName)
+		
+		if Folder is not  PDFs
+			Click "S6/ePrintapp/Preview_S6"
+			// It waits till the entire preview is generated based on image which is seen after preview
+			waitfor 300,"S6/ePrintapp/afterpreview_collection"
+			
+		end if 
+	else if Workflow is "Web"
+		put CommonFunctions_S6.eprintapp_webURL(FileName)
+		
+	else if Workflow is "Email"
+	
+	//WaitFor 300, "S6/ePrintapp/emailSetting"
+	//wait 1
+	//click "S6/ePrintapp/emailSetting"
+	//click text:"Automation"
+	put CommonFunctions_S6.eprintapp_emailPrinting(FileName)
+		
+	else if Workflow is "Cloud"
+		put CommonFunctions_S6.eprintapp_Cloud(FileName)
+	end if 
+	
+	SelectPrinterePrintApp connectivity,ipaddr
+	
+	if DefaultPrintSetting is "no" // User input settings
+		//put CommonFunctions_S6.eprintapp_setting
+		click "S6/ePrintapp/Edit"
+		
+		if Copies is not ""
+			put CommonFunctions_S6.eprintapp_copies (Copies)
+		end if
+		
+		
+		if PaperSize is not ""
+			put CommonFunctions_S6.eprintapp_papersize(PaperSize)	
+		end if
+		
+		if Quality is not ""
+			put CommonFunctions_S6.eprintapp_ColorQuality(Quality)
+		end if
+		
+		if TwoSided is not ""
+			put CommonFunctions_S6.eprintapp_Duplex(TwoSided)
+		end if
+		
+		
+		if Rotate is not ""
+			put CommonFunctions_S6.eprintapp_rotate(Rotate)
+		end if
+		
+		if Resize is not ""
+			put CommonFunctions_S6.eprintapp_resize(Resize)
+		end if
+		
+		Click(Text: "Done")
+	end if
+	
+	
+	//if imagefound ("S6/ePrintapp/PrintSettings/Done")
+	//	click "S6/ePrintapp/PrintSettings/Done"
+	//end if
+	
+	Click "Collection/Print"
+	waitfor 300,Text:"Photos"
+	
+	put CommonFunctions.BackButton
+	
+	put  "PASS" into execution_status
+	log atrecovery
+	
+	//For report, If attempt recovery is yes then the status has to be overwritten since the exeception is handled
+	if atrecovery is "yes"
+		wait 10
+		put Report.Logoverwritestatus( fname, execution_status,statusid)
+	else
+		put Report.Logstatus( fname, execution_status) into statusid
+		
+	end if
+	
+	//For report, If execution end time is already populated it would need to overwritten
+	if execendtime is "yes"
+		put report.ExecutionOWEndtime (fname,execid)
+	else
+		put report.ExecutionEndtime (fname) into execid
+	end if
+	put "yes" into execendtime
+	
+	EndTestCase TestcaseName
+	
+end repeat 
+

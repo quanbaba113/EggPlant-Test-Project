@@ -1,0 +1,187 @@
+﻿(* PluginWorkflowN7.script
+ *
+ * Description:
+ * This script is to handle HP Print Service Plugin for MS office and PDF files from FileManager
+ * 
+ *  
+ * 
+*****************************************************************
+*PluginWorkflowN7.script*)
+
+params connectivity,printerdetail
+
+global Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,Orientation,Color,execution_status,fname,atrecovery,statusid,execendtime,execid
+
+global Manufacturer, Devicename,PrinterName
+
+put number of lines in file "C:\tmp\PluginN7.csv" into counter
+log counter
+put 2 into lineno
+repeat lineno to counter
+	put "no" into atrecovery
+	put CommonFunctions.TestDataParsing("C:\tmp\PluginN7.csv",lineno)
+	add 1 to lineno
+	Log "Data from CSV from lineno " & lineno
+	Log Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,Orientation,Color
+	Log FileName
+	if TestExecute is "no"
+		next repeat
+	end if
+	
+	put CommonFunctions.GetTestCaseName(connectivity,PrinterName,Devicename,"HPPrintPlugin",FileName) into Name
+	
+	BeginTestCase Name
+	
+	put Report.LogonReport( fname, "HPPrintPlugin", connectivity,Devicename,PrinterName,FileName,DefaultPrintSetting)
+	
+	if Workflow is "PDFs" or Workflow is "DOCs" or Workflow is "PPTs" or Workflow is "XLSs" or Workflow is "TXT" then
+		SelectApp "File Manager"
+		wait 5
+		
+		click text:"Docs"
+		
+		put CommonFunctions.filetype(FileName)
+		
+		wait 5
+		
+		if Workflow is "PDFs" or if Workflow is "PPTs" or if Workflow is "Docs" then
+			//Updated Print setting menu button cordinates and added validation before clicking on it
+			WaitFor 6, "N7/plugin/Docs/PolarisMenu"
+			click (98,209)  // cordinates of print setting
+			click (Text:Print)
+			
+			//Commented as this ection was not required in the workflow for N7 dated 19/10
+			//if Workflow is "PPTs" or if Workflow is "Docs" then
+			//--wait 1
+			//--click "N9/coordinates_N9/FilemanagerPPTxArrow" //click on arrow for share and export
+			//click "N7/plugin/Print"
+			//click "N7/plugin/SystemPrintService"
+			//end if
+		end if
+		
+		
+		
+	else if Workflow is "Email" then
+		SelectApp "Email"
+		wait 5
+		put CommonFunctions_N7.plugin_EmailPrinting(FileName)
+		wait 5
+		
+		
+	else	if Workflow is "Web" then
+		SelectApp "Chrome"
+		wait 5
+		put CommonFunctions_N7.plugin_webURL (FileName)
+		wait 5
+		
+	else
+		
+		SelectApp "Photos"
+		//Updated Click on Albums >Device Folder>>Click on Image Dated 18/10
+		click "N7/plugin/Photos/Albums"
+		Wait 5
+		click (65,110)
+		WaitFor 5, (Text:"Device folders")
+		Click (Text:"Device folders")
+		wait 5
+		click "N7/plugin/Photos/" & FileName
+		WaitFor 5, "N7/plugin/Photos/photoprintoption"
+		click "N7/plugin/Photos/photoprintoption"
+		WaitFor 5, (Text:"Print")
+		click (text:"Print")
+	end if
+	
+	
+	
+	wait 10
+	SelectPrinterPlugin connectivity,printerdetail
+	//SelectPrinterPlugin "Ethernet","Bluefin"
+	
+	waitfor 50,"Collection/PluginPrint"
+	
+	if DefaultPrintSetting is "no"
+		click "Collection/PluginMoreSetting"
+		
+		if Copies is not ""
+			put CommonFunctions_N7.plugin_Copies(Copies)
+			wait 10
+		end if
+		if PaperSize is not "" 
+			put CommonFunctions_N7.plugin_PaperSize(PaperSize)
+			wait 10
+		end if
+		
+		Log "Outside Orientation"
+		
+		if Orientation is not ""
+			Log "Inside Orientation"
+			put CommonFunctions_N7.plugin_Orientation(Orientation)
+			wait 3
+		end if
+		
+		if Color is not""
+			put CommonFunctions_N7.plugin_Colour(Color)
+			wait 3
+		end if
+		
+		if Twosided is not ""
+			put CommonFunctions_N7.plugin_Duplex(TwoSided)
+			wait 3
+		end if
+		
+		
+		click text:"MORE OPTIONS"
+		
+		if Quality is not ""
+			put CommonFunctions_N7.plugin_Quality(Quality)
+			wait 3
+		end if
+		
+		
+		if Resize is not ""
+			put CommonFunctions_N7.plugin_Scaling(Resize)
+			wait 3
+		end if
+		
+		PressBackButton
+		
+	end if		
+	
+	WaitFor 50, "Collection/PluginPrint"
+	
+	click "Collection/PluginPrint"
+	wait 2
+	
+	if Workflow is "PDFs" or Workflow is "DOCs" or Workflow is "PPTs" or Workflow is "XLSs" or Workflow is "TXT"
+		PressBackButton
+		PressBackButton
+		PressBackButton
+		PresshomeButton
+	else
+		put CommonFunctions.BackButton
+	end if
+	
+	// If the exception is handled and the script continues , then the status is updated in the report
+	if atrecovery is "yes"
+		wait 5
+		put Report.Logoverwritestatus( fname, execution_status,statusid)
+	else
+		put Report.Logstatus( fname, execution_status) into statusid
+		
+	end if
+	
+	//The execution end time is updated in the report
+	if execendtime is "yes"
+		put report.ExecutionOWEndtime (fname,execid)
+	else
+		put report.ExecutionEndtime (fname) into execid
+	end if
+	put "yes" into execendtime
+	EndTestCase Name
+	
+	
+end repeat 
+
+
+
+

@@ -1,0 +1,71 @@
+﻿(* attemptRecovery.script
+ *
+ * Description:
+ * This script is handling execptions
+ * 
+ *  Parameters:
+*  Global Variables:  Variables passed across script
+*                          execution status : Status which is updated in the report
+*                          fname : Filename in which the report is created
+*                          atrecovery: Variable to check if attempt recovery is made or not if there was an exception
+*                          execendtime: Execution end time (status variable) to check if the endtime to be updated in the report
+*                          execid : Execution id used in HTML report generation
+*                          statusid: Status id used in HTML report generation
+ ******************************************************************attemptRecovery.script*)
+
+
+
+//Below variables are global since values are passed across scripts
+global execution_status, fname,atrecovery,statusid,execid,execendtime,execid
+log "entering omega13"
+
+//Below code is to get the current date and time on system
+put the date into dt
+replace "/" in dt by ""
+put the time into tm
+replace ":" in tm by ""
+replace " " in tm by ""
+
+// Filename which is created for each of the error screenshot with the timestamp
+put "C:/tmp/screenshots/errormsg_" & dt & tm & the seconds into filename
+log "Error message filename is " & filename
+//Captures the screen and saves it in the filename
+CaptureScreen filename
+Logerror "Screen captured"
+//Since it an error puts the below message to execution status
+put  "SCRIPT ABORT/FAIL" into execution_status
+
+put Report.Logstatus( fname, execution_status) into statusid
+
+if execendtime is "no"
+	put report.ExecutionEndtime (fname) into execid
+	//put report.ReportFooter (fname)
+else
+	put report.ExecutionOWEndtime (fname,execid)
+end if
+
+// Updates the variables of end time and attempt recovery to yes
+put "yes" into execendtime
+put "yes" into atrecovery
+//put report.ReportFooter (fname)
+
+// Execption handling in case of HP Eprint App
+
+if imagefound (Text:"OOPS") 
+	PressBackButton	
+end if
+wait 5
+if imagefound (Text:"Photos")
+	return Yes
+end if
+PressBackButton
+if imagefound (Text:"Stop")
+	click Text: "Yes"
+	PressBackButton
+	PressBackButton
+	PressBackButton
+end if
+
+wait 10
+
+return Yes

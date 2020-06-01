@@ -1,0 +1,22 @@
+TestExecute,Workflow,ConnectivityPath,NetworkSSID,PrinterDetail
+no,eprintApp_Workflow_S6,Ethernet,netgear29,192.168.31.175
+yes,Plugin_Workflow_S6,Ethernet,ciscosb,Marlin
+no,eprintApp_Workflow_S6,Wireless,ciscosb,192.168.1.22
+no,Plugin_Workflow_S6,Wireless,netgear29,yellow
+no,eprintApp_Workflow_S6,Wireless_direct,ciscosb,
+no,Plugin_Workflow_S6,Wireless_direct,ciscosb,
+no,eprintApp_Workflow_S6,WifiDirect,ciscosb,Ethernetbluefin
+no,Plugin_Workflow_S6,WifiDirect,,Direct-24-HP yellowtail
+no,eprintApp_Workflow_S6,HPCloud,ciscosb,
+no,Plugin_Workflow_S6,GCP,ciscosb,GCP_yellowtail
+no,eprintApp_Workflow_N9,Ethernet,ciscosb,15.77.14.214
+no,Plugin_Workflow_N9,Ethernet,ciscosb,192.168.75.146
+no,eprintApp_Workflow_N9,Wireless,ciscosb,192.168.75.146
+no,Plugin_Workflow_N9,Wireless,ciscosb,wireless_YellowTail
+no,eprintApp_Workflow_N9,Wireless_direct,ciscosb,Bluefin
+no,Plugin_Workflow_N9,Wireless_direct,ciscosb,Bluefin
+no,eprintApp_Workflow_N9,WifiDirect,ciscosb,yellowtail
+no,Plugin_Workflow_N9,WifiDirect,ciscosb,yellowtail
+no,Plugin_Workflow_N9,HPCloud,ciscosb,
+no,Plugin_Workflow_N9,GCP,ciscosb,GCP_yellowtail
+no,Plugin_Workflow_N7,Ethernet,ciscosb,EthernetBluefin

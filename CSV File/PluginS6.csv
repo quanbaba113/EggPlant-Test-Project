@@ -1,0 +1,14 @@
+Devicename,PrinterName,TestExecute,Workflow,Folder,Filename,DefaultPrintSettings,Copies,Paper Size,Quality,Rotate,Resize/Scaling,Layout,Paper Type,PaperRange,Two-sided,Orientation,Color
+S6,Marlin,no,PDFs,Docs,4pdf,no,3,A4,Normal,,Fill Page,,Plain Paper,,One Sided,Landscape,Black
+S6,Marlin,no,PDFs,Docs,3pdf,no,2,A4,Normal,,Fit to Page,,Plain Paper,,Two Sided(long),Portrait,Black
+S6,Marlin,no,DOCs,Docs,2docx,no,1,Legal,Automatic,,Fill Page,,Plain Paper,,Two Sided(short),Landscape,Black
+S6,Marlin,no,DOCs,Docs,3docx,no,2,Legal,Best,,Fill Page,,Photo Gloss Paper,,,Portrait,Black
+S6,Marlin,no,PPTs,Docs,2ppt,no,1,Legal,Normal,,Fill Page,,,,,Portrait,Black
+S6,Marlin,no,XLSs,Docs,2xlsx,no,2,Legal,Normal,,Fit to Page,,,,,Landscape,Black
+S6,Marlin,yes,photos,,Butterfly,no,2,A4,Automatic,,Fit to Page,,Photo Gloss Paper,,,Landscape,Black
+S6,Marlin,yes,photos,,Cup,no,2,A4,Best,,Fit to Page,,Plain Paper,,,Landscape,Black
+S6,Marlin,yes,photos,,Lady,no,3,A4,Normal,,Fit to Page,,Photo Gloss Paper,,,Landscape,Black
+S6,Marlin,yes,photos,,Scenary,no,2,A4,Normal,,Fit to Page,,,,,Landscape,Black
+S6,Marlin,no,PDFs,Docs,2xlsx,yes,2,A4,Normal,,,,,,,Landscape,Black
+S6,Marlin,yes,Web,,www.redbus.com,no,2,A4,Normal,,Fit to Page,,,,,Portrait,Black
+S6,Marlin,no ,Email,,wang,no,2,A4,Normal,,Fit to Page,,,,,Portrait,Black

@@ -1,0 +1,426 @@
+﻿(* CommonFunctions_S6.script
+ *
+ * Description:
+ * This script contains functions to configure the user input print settings 
+ * 
+ * 
+ *****************************************************************
+*CommonFunctions_S6.script*)
+
+
+function eprintapp_Copies CopiesOption
+	// copies 
+	click  "S6/ePrintapp/PrintSettings/Copies"
+	// selecting no of copies
+	put  "S6/ePrintapp/PrintSettings/Copies"  & CopiesOption into name
+	//put CopiesOption into character 30 of name
+	Log name
+	if imagefound (5,name)
+		click name
+	end if
+	return true
+	
+end eprintapp_Copies 
+
+
+
+//color mode
+Function eprintapp_ColorQuality ColorMode
+	if ImageFound("S6/ePrintapp/PrintSettings/ColorQuality")
+		click "S6/ePrintapp/PrintSettings/ColorQuality"
+		click "S6/ePrintapp/PrintSettings/Quality" 
+		//click "Color"
+	end if 
+	
+	put "S6/ePrintapp/PrintSettings/"  & ColorMode into name
+	
+	if imagefound (5,name)
+		click name
+		//Click (Text:"Done")
+	end if
+	return true
+	
+end eprintapp_ColorQuality
+
+
+
+// Paper type -Size
+
+function eprintapp_papersize MediaSize
+	if ImageFound("S6/ePrintapp/PrintSettings/Paper")
+		click "S6/ePrintapp/PrintSettings/Paper"
+	end if
+	click "S6/ePrintapp/PrintSettings/Paper_size"
+	put "S6/ePrintapp/PrintSettings/Paper_size" & MediaSize into name
+	(*	put number of characters of name into counter
+	put MediaSize into character (counter+1) of name*)
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+	end if
+	
+	return true
+end eprintapp_papersize
+
+function eprintapp_rotate Rotate
+	if ImageFound("S6/ePrintapp/PrintSettings/Rotate")
+		click "S6/ePrintapp/PrintSettings/Rotate"
+	end if
+	put "S6/ePrintapp/PrintSettings/" & Rotate into name
+	
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//Click (Text:"Done")
+	end if
+	
+	return true
+end eprintapp_rotate
+
+function eprintapp_resize Resize
+	
+	swipeleft ("S6/ePrintapp/PrintSettings/coordinates_swipe")
+	if ImageFound("S6/ePrintapp/PrintSettings/Resize")
+		click "S6/ePrintapp/PrintSettings/Resize"
+	end if
+	put "S6/ePrintapp/PrintSettings/" & Resize into name
+	
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//Click (Text:"Done")
+		
+	end if
+	
+	return true
+end eprintapp_resize
+
+function eprintapp_Duplex binding
+	click "S6/ePrintapp/PrintSettings/Layout"
+	click "S6/ePrintapp/PrintSettings/Twosided"
+	put "S6/ePrintapp/PrintSettings/" & binding into name
+	(*	put number of characters of name into counter
+	put binding into character (counter+1) of name*)
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//click (Text:"Done")
+	end if
+	return true
+end eprintapp_Duplex
+
+
+
+
+(* Description:
+* This script contains functions to configure the user input print settings for HP Print Plugin
+* 
+* 
+*****************************************************************
+* PluginSetting_SamsungS6.script*)
+
+
+// Enter the num of copies
+function plugin_Copies Numcopies
+
+	if Numcopies is 1
+		return true
+	else
+		click (147,549) // clicking on cordinate of copy 
+		click "S6/plugin/Settings/Backspace_S6"
+		
+		Typetext Numcopies
+		Click "S6/Plugin/Done"
+		return true
+	end if
+end plugin_Copies
+
+
+
+
+// Selecting the Orientation
+Function plugin_Orientation Input
+	click text:"Portrait"
+	click text:Input
+	return true
+	
+End plugin_Orientation
+
+// Selecting Paper Type
+Function plugin_PaperSize PaperSize 
+	Click (937,553)      // Clicking on papertsize dropdown
+	click text:PaperSize 
+	Return true
+	
+End plugin_PaperSize
+
+Function plugin_PaperType PaperType
+	//if imagefound("S6/plugin/PaperTray") 
+	//set thesearchRectanglech to ()
+	//click "S6/Plugin/Plain"
+	click (896,1212)
+	//Click "S6/plugin/Down Arrow"
+	click text:PaperType
+	Return true	
+	//end 
+End  plugin_PaperType
+
+
+// Select the color 
+Function plugin_Colour Colormode
+	click (208,856)          // Cordinates of Color Text
+	//(Multiple Color text available)
+	if Colormode is Colour
+		click "S6/plugin/Settings/ColourMode_S6"
+	else
+		
+		Click Text:Colormode
+		// click text:"Black"
+		return true
+	end if
+End plugin_Colour
+
+
+
+//Below option will come under more options
+
+Function plugin_Quality Qualitytype
+	click (1276,644)  // coordinates of quality options
+	click text:Qualitytype
+	return true
+End plugin_Quality
+
+
+
+Function plugin_Duplex Mode
+	//click 
+	//Click (Image:"S6/plugin/1sided", WaitFor:88)
+	click (861,1488)
+	
+	if Mode is "One Sided"
+		//click "1-sided"
+		Click "S6/plugin/1sided_1"
+		//click (619,1143) // Coordinates of duplex option
+		//Click text:Mode
+	end if
+	if Mode is "Two Sided(long)"
+		Click (Image:"S6/plugin/2sidedlongedg", WaitFor:5)
+	end if
+	if Mode is "Two Sided(short)"
+		Click (Image:"S6/plugin/2sidedshortedc", WaitFor:5)
+		return true
+	end if
+End plugin_Duplex
+
+
+
+function plugin_Scaling Option
+	//if imagefound("S6/plugin/PaperTray")
+	Click(1276,1744)
+	//Click(1271,1470)	
+	Click(Text:Option)
+	(*	else
+		
+		click (890,917)    // coordinates of scaling option
+		
+		click text:Option*)
+	
+	return true
+end plugin_Scaling
+
+
+
+
+
+// For Photos, scaling coordinates differ since it does not have //duplex
+function plugin_PhotoScaling Option
+	//if imagefound("S6/plugin/PaperTray")
+	Click(1276,1744)
+	Click(Text:Option)
+	(*	else
+		click (1278,1195)  
+		click text:Option*)
+	//end if
+	return true
+end plugin_PhotoScaling
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// For HP Eprint App,To enter the user specified link on the //browser web page
+function eprintapp_webURL link
+	//Click "S6/ePrintapp/Web"
+	wait 3
+	TypeText link
+	click "S6/ePrintapp/webarrow"
+	//waitfor 300,"s6/ePrintapp/refresh" // refresh appears only for rediff , hence changed to next enabledment
+	waitfor 60,"S6/ePrintapp/web_Previev"
+	Click "S6/ePrintapp/web_Previev"
+	wait 10
+	//waitfor 300,"s6/ePrintapp/webNext"
+	//click (Text:Next)
+	//waitfor 300,"S6/ePrintapp/WebOriginal"
+	//return true
+end eprintapp_webURL
+
+
+
+// For HP EPrint App, to select an email
+function eprintapp_emailPrinting Filename
+
+	//Click "S6/ePrintapp/Email"
+	Click "S6/ePrintapp/Gmail"
+	waitfor 300,"S6/ePrintapp/email_search"
+	click (text:Filename)
+	waitfor 300, "S6/ePrintapp/EmailBody"
+	Click "S6/ePrintapp/EmailBody"
+	wait 10
+	//waitfor 300,"S6/ePrintapp/docicon"
+	
+	//click (134,2443)  // clicking on the attachment
+	
+	return true
+	
+end eprintapp_emailPrinting
+
+function eprintapp_Cloud Filename
+	//Click "S6/ePrintapp/Cloud"
+	Click(Text: "Dropbox")
+	Click(Text: "Camera")
+	Click(Text:Filename)
+	wait 10
+end eprintapp_Cloud
+
+// Enter the user specified Web URL
+function plugin_webURL link
+	wait 2
+	//click "S6/plugin/Chrome_Home"
+	Click (Image:"S6/plugin/SearchortypeURL", WaitFor:5)
+	//click (236,213)
+	wait 5
+	TypeText link
+	wait 3
+	click "S6/plugin/Go"
+	wait 3
+	return true
+end  plugin_webURL
+
+// Select the user specified email subject
+function plugin_email subject
+	click text:subject 
+	Click (Image:"S6/plugin/Dot")
+	wait 10
+	Click (Image:"S6/plugin/Print")
+	wait 10
+	return true
+end plugin_email
+
+
+
+// For S6 HP Eprint App to add the printer IP address ( Ethernet //and Wireless)
+function eprintapp_ethernet ipaddr
+
+	click  (704,2206) // selecting the arrow to list the available printers HP Eprint App
+	click "S6/Connectivity/Addprinter_S6"
+	wait 5
+	TypeText ipaddr //"192.168.1.2"
+	put 1 into count
+	repeat forever
+		//put ReadText ("S6/ePrintapp/AddPrinterHotspotTL", "S6/ePrintapp/AddPrinterHotspotBR") into ip
+		if ip is ipaddr or if count is 120 then
+			exit repeat
+		end if
+		add 1 to count
+	end repeat
+	click "S6/Connectivity/AddButton_S6"
+	wait 5
+	if ImageFound (Text:already) // If Printer is already existing
+		Click (1023,1596)	// Click Use
+	end if
+	wait 5
+end eprintapp_ethernet
+
+// For S6, To disconnect WifiDirect setting before connecting on //Ethernet, Wireless ,Wireless Direct
+
+function eprintapp_disconnectWifiDirect 
+	click "S6/Connectivity/WiFiDirect"
+	if ImageFound (Text:"disconnect")
+		click (Text:"disconnect")
+	end if	
+	PressBackButton
+end eprintapp_disconnectWifiDirect 
+
+
+
+// All plugin related functions are called in the plugin setting function
+
+function plugin_printsetting
+
+	global TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,Orientation,Color
+	
+	click "Collection/PluginMoreSetting" // Gallery
+	
+	if Copies is not ""
+		put CommonFunctions_S6.plugin_Copies(Copies)
+		wait 2
+	end if
+	if PaperSize is not "" 
+		put CommonFunctions_S6.plugin_PaperSize(PaperSize)
+		wait 2
+	end if
+	
+	
+	if Orientation is not ""
+		
+		put CommonFunctions_S6.plugin_Orientation(Orientation)
+		
+		wait 2
+	end if
+	
+	if Color is not""
+		put CommonFunctions_S6.plugin_Colour(Color)
+		wait 2
+	end if
+	
+	
+	if imagefound(text:"MORE OPTIONS")
+		click text:"MORE OPTIONS" 
+		//Plugin_MoreOption
+		
+		if Quality is not ""
+			put CommonFunctions_S6.plugin_Quality(Quality)
+			wait 2
+		end if
+		if PaperType is not "" 
+			put CommonFunctions_S6.plugin_PaperType(PaperType)
+			wait 2
+		end if
+		if TwoSided is not ""
+			put CommonFunctions_S6.plugin_Duplex(TwoSided)
+			wait 2
+		end if
+		if Resize is not "" 
+			Log Resize
+			if workflow is not "Photos" 
+				put CommonFunctions_S6.plugin_Scaling(Resize)
+				wait 2
+			else
+				put CommonFunctions_S6.plugin_PhotoScaling(Resize)
+				wait 2
+			end if
+		end if
+		
+	end if
+	PressBackButton
+	return true
+end plugin_printsetting
+
+
+
+

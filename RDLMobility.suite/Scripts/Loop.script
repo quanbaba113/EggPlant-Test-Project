@@ -1,0 +1,224 @@
+﻿//repeat 100 times
+//Click "plus"
+//Typetext "15.77.14.253"
+//wait 10
+//PressBackbutton
+//PressBackbutton
+//wait 2
+//end repeat
+
+(*		if PaperTray is not "" 
+			put CommonFunctions_S6.plugin_PaperTray(PaperTray)
+			wait 2			
+		end if*)
+
+(*	if PaperRange is not""
+		put CommonFunctions_S6.plugin_PaperRange(PaperRange)
+		wait 2		
+	end if*)
+
+
+Function plugin_PaperRange PaperRange
+	if PaperRange is "1"
+		Click (179,1092)
+		//Click (Image:"S6/plugin/PagesAll4", WaitFor:5)
+		Click (Image:"S6/plugin/Selectranae", WaitFor:5)
+		TypeText PaperRange
+		//Click "S6/Plugin/Done"	
+		Click (Image:"S6/plugin/Done_1", WaitFor:5)
+		
+	end if
+	if PaperRange is "2"
+		Click (179,1092)
+		Click (Image:"S6/plugin/Selectranae", WaitFor:5)
+		TypeText PaperRange
+		//Click "S6/Plugin/Done"	
+		Click (Image:"S6/plugin/Done_1", WaitFor:5)
+	end if	
+End plugin_PaperRange
+
+Function plugin_PaperTray PaperTray
+	//Click (Image:"S6/plugin/Auto", WaitFor:5)
+	click(857,926)
+	//click(text:List)
+	if PaperTray is Tray1
+		//Click "S6/plugin/Auto_1"
+		//click 
+		Click (Image:"S6/plugin/Trayl", WaitFor:4.7)
+		return true
+	end if
+	if PaperTray is Manual
+		//click 
+		Click (Image:"S6/plugin/Manual", WaitFor:13.4)
+		return true
+	end if
+	//click text:PaperTray
+	return true	
+End plugin_PaperTray
+
+Click "S6/ePrintapp/PrintSettings/Paper_sizeA4"
+click "S6/ePrintapp/PrintSettings/LongEdgeBinding"
+tap(66,65)
+tap(384,242)
+Click (Image:"image0001", WaitFor:9.8)
+Click (Image:"image0002", WaitFor:6.5)
+set the searchrectangle to(0,66,65,0)
+tap(784,291)
+set the searchrectangle to(66,0,0,65)
+set the searchrectangle to(66,65,0,0)
+tap(628,300)
+tap(573,247)
+tap(55,53)
+tap(111,125)
+tap(-414,-170)
+Click "image0003"
+tap(-314,50)
+tap(462,348)
+Click "image0004"
+tap(55,53)
+set the searchrectangle to(55,0,0,53)
+set the searchrectangle to(55,53,0,0) 
+Click (Image:"image0005", WaitFor:4)
+
+Global PaperTray
+repeat with eachline of"C:\tmp\PluginS6.csv"
+	if PaperTray is Auto
+		Click "S6/plugin/Auto_1"
+	end if
+end repeat
+
+if Workflow is "PDFs" or Workflow is "DOCs" or Workflow is "PPTs" or Workflow is "XLSs" or Workflow is "TXT"
+	//Click (Image:"S6/plugin/PHOTO1", WaitFor:5)	
+	click text:DOCUMENT	
+	if Quality is not ""
+		put CommonFunctions_S6.plugin_Quality(Quality)
+		wait 2
+	end if	
+	if PaperType is not "" 
+		put CommonFunctions_S6.plugin_PaperType(PaperType)
+		wait 2
+	end if
+	if Scaling is not "" 
+		put CommonFunctions_S6.plugin_Scaling(Resize)
+		wait 2	
+	end if		
+else
+	//Click (Image:"S6/plugin/Document1", WaitFor:5)
+	click text:PHOTO	
+	if Quality is not ""
+		put CommonFunctions_S6.plugin_Quality(Quality)
+		wait 2
+	end if
+	
+	(*if PaperType is not "" 
+		put CommonFunctions_S6.plugin_PaperType(PaperType)
+		wait 2
+	end if*)
+	if Scaling is not ""
+		put CommonFunctions_S6.plugin_Scaling(Resize)
+		wait 2
+	end if
+end if
+
+
+global DName, ActiveDeviceName
+
+put AllConnectionInfo()
+set ActiveDeviceName to ServerID of AllConnectionInfo()
+
+put "Start connecting to " &ActiveDeviceName & "..."
+Connect ActiveDeviceName
+put "Connected to " & ActiveDeviceName & "successfully!!"
+
+if ActiveDeviceName is "SM-G920I (02157df28862a940)" 
+then
+	set DName to ("Galaxy_S6")
+	log DName
+put "DeviceName: " & DName
+end if	
+
+if ActiveDeviceName is "SM-G920I (02157df28877e216)" 
+then
+	set DName to ("Galaxy_S6")
+	log DName
+	put "DeviceName: " & DName
+end if
+
+if ActiveDeviceName is "MI 5 (a4d4952d)" 
+then
+	set DName to ("MI 5")
+	log DName
+	put "DeviceName: " & DName	
+end if
+
+if ActiveDeviceName is "ALE-UL00 (N2F4C15C18023816)" 
+then 
+	set DName to ("HUAWEI P8")
+	log DName 
+	put "DeviceName: " & DName	
+end if	
+
+if ActiveDeviceName is "Nexus 6 (ZX1G429CPB)"
+then
+	set DName to ("Nexus 6")
+	log DName
+	put "DeviceName: " & DName	
+end if
+
+
+set SuitePath to the folder of the folder of the folder of me
+log SuitePath
+set DeviceDPI to ("Nexus6":"560","Galaxy_S6":"577","MI 5":"480","HUAWEI P8":"387","Nexus 10":"300")
+set the readtextsettings to (DPI:DeviceDPI.(DeviceName))
+put the readtextsettings 
+
+
+put (Nexus6:"Android","Galaxy_S6":"Android","MI 5":"Android","HUAWEI P8":"387","Nexus 10":"300") into DeviceOSList 
+
+set DeviceOS to DeviceOSList.(DeviceName)
+
+put (Nexus6:"Nexus6","Galaxy_S6":"GalaxyS6","MI5":"MI 5","HUAWEI P8":"387","Nexus 10":"300") into DeviceSuiteList //Define what suite of images a device should use
+
+set DeviceSuite to DeviceSuiteList.(DeviceName)
+
+
+// set the initialsuites to (SuitePath & "HPePrint_"  & "Images.suite" ,SuitePath & "HPePrint_" & "Workflow.suite",SuitePath & "HPePrint_" & DeviceOS & "_Functions" & ".suite")
+set the initialsuites to (SuitePath & "HPePrint_"  & "Images.suite" ,SuitePath & "HPePrint_" & "Workflow.suite")
+
+global ExecInitFile, TestConfigFile
+set ExecInitFile to "C:\tmp\Execution.csv"
+set TestConfigFile to "D:\EggPlantProject\HpePrint\CaseFile\ExecutionFile\HPePrint.csv"
+
+
+
+(*Set the KeyDownDelay to 0.05 //default 0.001
+Set the NextKeyDelay to 0.08 //default 0.02
+Set MouseClickDelay to 0.5 //default 0.02
+Set the SwipeSpeed to 10 //default 40*)
+
+// For S6 and Nexus, to press back button till the Apps screen is found
+(*function BackButton
+	global Manufacturer, Devicename,PrinterName
+	
+	
+	put  Devicename & "/" & Devicename & "Apps" into Appimage // eg S6/S6Apps
+	
+	Repeat forever
+		if ImageFound(Appimage)
+			exit repeat
+		else
+			PressBackButton
+		end if
+		
+	end Repeat
+	log "ending repeat in backbutton"
+	return true
+end BackButton*)
+
+
+
+
+
+
+
+

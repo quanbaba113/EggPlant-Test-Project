@@ -1,0 +1,123 @@
+﻿2016-12-29 10:02:05.005 +0800	START		Running execution.script
+2016-12-29 10:02:07.007 +0800	Log		22	34	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		TestExecute	5	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		no	6	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Workflow	8	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		eprintApp_Workflow_S6	9	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		ConnectivityPath	11	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Ethernet	12	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		NetworkSSID	14	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		netgear29	15	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		PrinterDetail	17	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		192.168.31.175	18	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		 worflow connectivity details	19	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		no	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		eprintApp_Workflow_S6	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Ethernet	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		netgear29	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		192.168.31.175	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Data from CSV from lineno 3	39	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		no	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		eprintApp_Workflow_S6	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		Ethernet	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		netgear29	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		192.168.31.175	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		TestExecute	5	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		yes	6	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Workflow	8	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Plugin_Workflow_S6	9	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		ConnectivityPath	11	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Ethernet	12	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		NetworkSSID	14	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		ciscosb	15	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		PrinterDetail	17	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Marlin	18	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		 worflow connectivity details	19	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		yes	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Plugin_Workflow_S6	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Ethernet	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		ciscosb	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Marlin	20	function_workflow_connectivity	CommonFunctions.script
+2016-12-29 10:02:08.008 +0800	Log		Data from CSV from lineno 4	39	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		yes	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		Plugin_Workflow_S6	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		Ethernet	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		ciscosb	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		Marlin	40	on_execution	execution.script
+2016-12-29 10:02:08.008 +0800	Log		 Workflow executed is Plugin_Workflow_S6	51	on_execution	execution.script
+2016-12-29 10:02:09.009 +0800	Log		14	26	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:09.009 +0800	Log		data	5	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		S6,Marlin,yes,PDFs,Docs,4pdf,no,3,A4,Normal,,Fill Page,,Plain Paper,,One Sided,Landscape,Black	6	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Devicename	9	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		S6	10	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		PrinterName	13	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Marlin	14	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		TestExecute	17	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		yes	18	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Workflow	20	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		PDFs	21	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Folder	23	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Docs	24	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		FileName	26	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		4pdf	27	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		DefaultPrintSetting	29	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		no	30	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Copies	32	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		3	33	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		A4	35	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Normal	37	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Rotate	39	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log			40	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Resize	42	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Fill Page	43	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Layout	45	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log			46	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Plain Paper	48	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log			50	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		One Sided	52	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Landscape	54	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		Black	56	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		inside testdata parsing	57	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:09.009 +0800	Log		4pdf	58	function_testdataparsing	CommonFunctions.script
+2016-12-29 10:02:10.010 +0800	Log		Data from CSV from lineno 3	32	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		S6	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Marlin	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		yes	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		PDFs	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Docs	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		4pdf	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		no	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		3	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		A4	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Normal	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log			33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Fill Page	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log			33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Plain Paper	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log			33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		One Sided	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Landscape	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Black	33	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:10.010 +0800	Log		Ethernet_MarlinS6HPPrintPlugin4pdf	4	function_gettestcasename	CommonFunctions.script
+2016-12-29 10:02:10.010 +0800	BeginTestCase		Ethernet_MarlinS6HPPrintPlugin4pdf	41	on_plugin_workflow_s6	Plugin_Workflow_S6.script
+2016-12-29 10:02:11.011 +0800	click	S6\plugin\Filemanager1	at (196, 1677)	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:02:18.018 +0800	click	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:(244,1029), ImageRectangle:(185,1009,304,1050), Language:"English", Text:"Docs", TextPlatform:"Generic OCR")	at (244, 1029)	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:02:20.020 +0800	imagefound	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:(274,1052), ImageRectangle:(210,1022,338,1083), Language:"English", text:"4pdf", TextPlatform:"Generic OCR")	found at (274, 1052)	4	function_filetype	CommonFunctions.script
+2016-12-29 10:02:20.020 +0800	Log		4pdf	5	function_filetype	CommonFunctions.script
+2016-12-29 10:02:25.025 +0800	click	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:(274,1052), ImageRectangle:(210,1022,338,1083), Language:"English", text:"4pdf", TextPlatform:"Generic OCR")	at (274, 1052)	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:02:40.040 +0800	tap		at (15, 212)	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:02:41.041 +0800	click		at (15, 212)	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:03:12.012 +0800	Exception	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:"", ImageRectangle:"", Language:"English", Text:"Print", TextPlatform:"Generic OCR")	No Image Found On Screen: "(TEXT:"Print")"	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:03:12.012 +0800	Log		entering omega13	20	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:03:13.013 +0800	Log		Error message filename is C:/tmp/screenshots/errormsg_1229161003AM504669793	31	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:03:13.013 +0800	LogWarning		Unable to save C:/tmp/screenshots/errormsg_1229161003AM504669793.png	33	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:03:13.013 +0800	LogError		Screen captured	34	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:03:23.023 +0800	imagefound	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:"", ImageRectangle:"", Language:"English", Text:"OOPS", TextPlatform:"Generic OCR")	Unable to Find Image (TEXT:"OOPS")	54	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:03:38.038 +0800	imagefound	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:"", ImageRectangle:"", Language:"English", Text:"Photos", TextPlatform:"Generic OCR")	Unable to Find Image (TEXT:"Photos")	58	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:03:38.038 +0800	pressbackbutton			61	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:04:06.006 +0800	imagefound	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:"", ImageRectangle:"", Language:"English", Text:"Stop", TextPlatform:"Generic OCR")	Unable to Find Image (TEXT:"Stop")	62	function_attemptrecovery	attemptRecovery.script
+2016-12-29 10:05:08.008 +0800	Exception	(CaseSensitive:"No", Contrast:"Off", IgnoreSpaces:"No", ImageLocation:"", ImageRectangle:"", Language:"English", Text:"Print", TextPlatform:"Generic OCR")	No Image Found On Screen: "(TEXT:"Print")"	1	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:05:08.008 +0800	Throw		Image Not Found - click Error - No Image Found On Screen: "(TEXT:"Print")"	15	on_overridecommand	C:/Program Files (x86)/eggPlant/Eggplant.app/Resources/EggplantCommon.suite/Scripts/Omega13.script
+2016-12-29 10:05:08.008 +0800	EndTestCase		(Duration:"178.304", Errors:"2", Exceptions:"3", StartTime:"2016-12-29 10:02:10 +0800", Successes:"0", TestCase:"Ethernet_MarlinS6HPPrintPlugin4pdf", Warnings:"1")
+2016-12-29 10:05:08.008 +0800	EndTestCase		(Duration:"183.924", Errors:"2", Exceptions:"3", StartTime:"2016-12-29 10:02:05 +0800", Successes:"0", TestCase:"execution.script", Warnings:"1")
+2016-12-29 10:05:09.009 +0800	FAILURE	Screen_Error.png	Image Not Found click Error - No Image Found On Screen: "(TEXT:"Print")" -- Execution Time 0:03:03 execution.script

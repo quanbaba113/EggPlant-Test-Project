@@ -1,0 +1,67 @@
+﻿(* execution_S6.script
+ *
+ * Description:
+ * This script is for executing the S6 HP EPrint App and HP Plugin Workflow across  all the connectivity path
+ * 
+ *  Parameters:
+ * Workflow script: Connectivity Path, Printer IP
+ * Global variables : Variables read from CSV
+*  Global Variables:  Variables passed across script
+*                          fname : Filename in which the report is created
+*                          atrecovery: Variable to check if attempt recovery is made or not if there was an exception
+*                          execendtime: Execution end time (status variable) to check if the endtime to be updated in the report
+*                          execid : Execution id Used in HTML report generation      
+ ******************************************************************execution_S6.script*)
+
+//  The device can be connected using device name or giving Server id & port number
+//Connect S6
+
+//Connect (ServerID:"SM-G920I (02157df2c19fa126)",portNum:"5900") 
+
+// Omega13 is for exception handling.
+// We start it before beginning the entire suite execution
+//Connect "SM-G920I (02157df28862a940)"
+Start using Omega13
+// Below variables which are read from CSV are global 
+global TestExecute,Workflow,ConnectivityPath,NetworkSSID,PrinterDetail,Devicename
+//Below variables are global since values are passed across scripts
+global fname,atrecovery,execendtime,execid
+
+put "no" into execendtime
+put Report.ReportHeader into fname
+
+// Below code is to read data from CSV and populate it to the global variables
+put number of lines in file "C:\tmp\Execution.csv" into counter
+log counter
+put 2 into lineno
+repeat lineno to counter
+	put CommonFunctions.workflow_connectivity("C:\tmp\Execution.csv",lineno)
+	add 1 to lineno
+	Log "Data from CSV from lineno " & lineno
+	Log TestExecute,Workflow,ConnectivityPath,NetworkSSID,PrinterDetail
+	
+	if TestExecute is "no"
+		next repeat
+	end if
+	
+	// Interactive pop up to make sure the connectivity setting are made
+	
+	//ask " Please input Yes or Y when the DUT is connected in the " & ConnectivityPath & " Path" & " for " & Workflow & " Printer " & PrinterDetail
+	//put it into choice
+	//if choice is "Yes" or choice is "Y"  then
+	log" Workflow executed is " & Workflow
+	Run Workflow ConnectivityPath,PrinterDetail
+	//end if 	
+end repeat
+
+// Below code to write execution end time to report (if the end time is written once it will be overwritten)
+if execendtime is "yes"
+	put report.ExecutionOWEndtime (fname,execid)
+else
+	put report.ExecutionEndtime (fname) into execid
+end if
+
+put report.ReportFooter (fname)
+
+Stop using Omega13
+

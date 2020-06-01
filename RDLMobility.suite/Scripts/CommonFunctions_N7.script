@@ -1,0 +1,255 @@
+﻿(* Common Functions N7.script
+ *
+ * Description:
+ * This script contains functions to configure the user input print settings
+ * 
+ *Common Functions N7.script
+
+*********************************************************************)
+
+function plugin_webURL link
+	
+	tap (625,182)
+	click "N7/plugin/webURLdelete"
+	TypeText link
+	wait 5
+	click "N7/plugin/webarrow"
+	click "N7/plugin/for_webprint"
+	click (text:"Print")
+	
+	return true
+	
+end  plugin_webURL
+
+
+function plugin_EmailPrinting subject
+	if imagefound (10, "N7/plugin/for_gmail")
+		click "N7/plugin/for_gmail"
+		click (Text:Important)
+		if imagefound (10, text:subject)
+			click( text:subject)
+			click "N7/plugin/for_webprint"
+			click (text:"Print")
+		end if
+	end if
+end plugin_EmailPrinting
+
+function plugin_Copies Numcopies
+
+	if Numcopies is not 1
+		click (82,259) // clicking on cordinate of Copies
+		click "N7/plugin/backspace"
+		Typetext Numcopies
+		
+	end if
+	
+	return true
+end plugin_Copies
+
+
+Function plugin_PaperSize PaperType
+	
+	click (510,264)
+	Log "Inside PaperSize"
+	click text:PaperType
+	Log PaperType
+	return true
+	
+End plugin_PaperSize
+
+
+Function plugin_Colour Colormode
+	click (909,269)          // Cordinates of Color Text
+	//(Multiple Color text available)
+	if Colormode is Colour
+		click "N9/ePrintapp/PrintSetting/ColourMode" //TBD
+	else
+		
+		Click Text:Colormode
+	end if
+	return true
+End plugin_Colour
+
+Function plugin_Quality Qualitytype
+	click (999,203)  // coordinates of quality options
+	
+	click text:Qualitytype
+	return true
+End plugin_Quality
+
+function plugin_Scaling Option
+
+	click (1016,433)
+	click text:Option
+	return true
+end plugin_Scaling
+
+Function plugin_Duplex Mode
+	click (558,412) // Coordinates of duplex option
+	Click text:Mode
+	return true
+End plugin_Duplex
+
+Function plugin_Orientation Input
+	click text:"Portrait"
+	click text:Input
+	return true
+	
+End plugin_Orientation
+
+function eprintapp_ethernet ipaddr
+
+	click  (471,1718) // to select the list the available printers HP Eprint App
+	click "N7/Connectivity/Addprinter"
+	wait 10
+	TypeText ipaddr //"192.168.1.2"
+	wait 2
+	repeat forever
+		put ReadText ("N7/ePrintapp/AddPrinterHotspotTL", "N7/ePrintapp/AddPrinterHotspotBR") into ip
+		if ip is ipaddr or if count is 120 then
+			exit repeat
+		end if
+		add 1 to count
+	end repeat
+	click "N7/Connectivity/AddButton"
+	wait 5
+	if ImageFound (Text:already) // If Printer is already existing
+		Click (877,1068)	// Click Use
+	end if
+	wait 10
+end eprintapp_ethernet
+
+function eprintapp_Copies CopiesOption
+	// copies 
+	click  "N7/ePrintapp/PrintSetting/Copies"
+	// selecting no of copies
+	put  "N7/ePrintapp/PrintSetting/Copies"  & CopiesOption into name
+	//put CopiesOption into character 30 of name
+	Log name
+	if imagefound (5,name)
+		click name
+	end if
+	return true
+	
+end eprintapp_Copies 
+
+
+
+//color mode
+Function eprintapp_ColorQuality ColorMode
+	if ImageFound("N7/ePrintapp/PrintSetting/ColorQuality")
+		click "N7/ePrintapp/PrintSetting/ColorQuality"
+		click "N7/ePrintapp/PrintSetting/Quality" 
+		//click "Color"
+	end if 
+	
+	put "N7/ePrintapp/PrintSetting/"  & ColorMode into name
+	if imagefound (5,name)
+		click name
+		//Click (Text:"Done")
+	end if
+	return true
+	
+end eprintapp_ColorQuality
+// Paper type -Size
+
+function eprintapp_PaperType MediaSize
+	if ImageFound("N7/ePrintapp/PrintSetting/Paper")
+		click "N7/ePrintapp/PrintSetting/Paper"
+	end if
+	click "N7/ePrintapp/PrintSetting/Paper_size"
+	put "N7/ePrintapp/PrintSetting/Paper_size" & MediaSize into name
+	(*	put number of characters of name into counter
+	put MediaSize into character (counter+1) of name*)
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//Click (Text:"Done")
+	end if
+	
+	return true
+end eprintapp_PaperType
+
+
+
+function eprintapp_Duplex binding
+	click "N7/ePrintapp/PrintSetting/Layout"
+	click "N7/ePrintapp/PrintSetting/Twosided"
+	put "N7/ePrintapp/PrintSetting/" & binding into name
+	(*	put number of characters of name into counter
+	put binding into character (counter+1) of name*)
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//click (Text:"Done")
+	end if
+	return true
+end eprintapp_Duplex
+
+function eprintapp_rotate Rotate
+	if ImageFound("N7/ePrintapp/PrintSetting/Rotate")
+		click "N7/ePrintapp/PrintSetting/Rotate"
+	end if
+	put "N7/ePrintapp/PrintSetting/" & Rotate into name
+	
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//Click (Text:"Done")
+	end if
+	
+	return true
+end eprintapp_rotate
+
+function eprintapp_resize Resize
+	if ImageFound("N7/ePrintapp/PrintSetting/Resize")
+		click "N7/ePrintapp/PrintSetting/Resize"
+	end if
+	put "N7/ePrintapp/PrintSetting/" & Resize into name
+	
+	
+	Log name
+	if imagefound (5,name)
+		// wait for 5 seconds
+		click name
+		//Click (Text:"Done")
+		
+	end if
+	
+	return true
+end eprintapp_resize
+
+
+// Page-Range functionality
+//Note: Applicable for network printing
+//put 2 into RangeValue
+function eprintapp_PageRange RangeValue
+	log RangeValue
+	if Imagefound("N9/ePrintapp/PrintSetting/PageRange")
+		click "N9/ePrintapp/PrintSetting/PageRange"
+	end if
+	click "N9/ePrintapp/PrintSetting/Single_range"	
+	TypeText RangeValue
+	//Click (Text:"Done")
+	return true
+end eprintapp_PageRange
+
+
+function eprintapp_webURL link
+	TypeText link
+	wait 5
+	click  "N7/eprintapp/webarrow"
+	waitfor 300,"N7/eprintapp/refresh"
+	click (text:Preview)
+	WaitFor 300,"N7/ePrintapp/afterpreview/afterpreview_web"
+	
+	//click (Text:Preview, Validcharacter:Preview, Contrast:on,ContrastColor:"48,163,217")
+	return true
+	
+end eprintapp_webURL

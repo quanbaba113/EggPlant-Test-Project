@@ -1,0 +1,245 @@
+﻿(* PluginDocsWorkflowS6.script
+ *
+ * Description:
+ * This script is to handle HP Print Service Plugin for MS office and PDF files from FileManager
+
+ *  Parameters:
+*   Connectivity Path, Printer IP
+ * 
+ *Global Variables:  Variables passed across script
+*                          execution status : Status which is updated in the report
+*                          fname : Filename in which the report is created
+*                          atrecovery: Variable to check if attempt recovery is made or not if there was an exception
+*                          execendtime: Execution end time (status variable) to check if the endtime to be updated in the report
+*                          execid : Execution id used in HTML report generation
+*                          statusid: Status id used in HTML report generation
+ *  
+ * 
+*****************************************************************
+*PluginDocsWorkflowS6.script*)
+params connectivity,printerdetail
+
+global Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,Orientation,Color,execution_status,fname,atrecovery,statusid,execendtime,execid
+
+// Below code to read data from PluginS6.csv and populate the global variables
+put number of lines in file "C:\tmp\PluginS6.csv" into counter
+log counter
+put 2 into lineno
+repeat lineno to counter
+	put "no" into atrecovery
+	put CommonFunctions.TestDataParsing("C:\tmp\PluginS6.csv",lineno)
+	add 1 to lineno
+	Log "Data from CSV from lineno " & lineno
+	Log Devicename,PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,Orientation,Color
+	
+	if TestExecute is "no"
+		next repeat
+	end if
+	// This function is called to get the testcase name 
+	put CommonFunctions.GetTestCaseName(connectivity,PrinterName,Devicename,"HPPrintPlugin",FileName) into Name
+	
+	BeginTestCase Name
+	
+	put Report.LogonReport( fname, "HPPrintPlugin", connectivity,Devicename,PrinterName,FileName,DefaultPrintSetting)
+	
+	if Workflow is "PDFs" or Workflow is "DOCs" or Workflow is "PPTs" or Workflow is "XLSs" or Workflow is "TXT" then
+		click "S6\plugin\Filemanager1"
+		//SelectApp "File Manager"
+		wait 2
+		Click (Text:Folder)
+		put CommonFunctions.filetype(FileName)
+		wait 5
+		
+		if Workflow is PDFs
+			wait 10
+			Tap(15,212)
+			click (15,212) // cordinates of print setting( //three vertical dots) File_Print_option.png
+		else
+			if Imagefound( "S6/plugin/plugin_before_printimage")
+				click(21,219) // coordinate of print setting -- (three horizontal line in left)
+			else
+				//Tap (666,1123)// tap to make the print option //visible 
+				click(21,219)
+			end if 
+		end if
+		click (Text:Print)
+		
+		if FileName is "Landscape"
+			Log "Filename is landscape"
+			Wait 60
+		else
+			wait 10
+		end if
+		
+	else if Workflow is "Email" then 	
+		
+		
+		//SelectApp "Email"
+		//click 
+		Click "S6/plugin/Email"
+		wait 5
+		put CommonFunctions_S6.plugin_email(FileName)
+		wait 20
+		//click (1334,216) // co-ordinate for Print Setting
+		//click (Text:Print)
+		
+		//click "S6/plugin/email_more" // click on MORE
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+	else if Workflow is "Web" then
+		
+		//SelectApp "Chrome"
+		Click (Image:"S6/plugin/Chrome")
+		wait 5
+		
+		put CommonFunctions_S6.plugin_webURL(FileName)
+		click (1334,216) // co-ordinate for Print Setting
+		//click 
+		Click (Image:"S6/plugin/Share", WaitFor:5)
+		Click (Image:"S6/plugin/APrint", WaitFor:5)
+		//click (Text:Share,ValidCharacters:"Print",Contrast:On,ContrastColor:"white")
+		//click (Text:Print,ValidCharacters:"Print",Contrast:On,ContrastColor:"white")
+		//click (Text:Print,ValidCharacters:"Print",Contrast:On,ContrastColor:"white")
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////
+	else
+		Click (Image:"S6/plugin/Gallery1")
+		//SelectApp "Gallery"
+		click (text:"TestData")
+		
+		//click FileName
+		if FileName is "Butterfly"
+			click "S6/plugin/Gallery/Butterfly"
+		end if
+		if FileName is "Cup"
+			click "S6/plugin/Gallery/Cup"
+		end if
+		if FileName is "Lady"
+			click "S6/plugin/Gallery/Lady"
+		end if
+		if FileName is "Scenary"
+			click "S6/plugin/Gallery/Scenary"
+		end if
+		//click "S6/plugin/Gallery/Butterfly"
+		wait 5
+		Tap(573,2386)
+		Tap(573,2386)
+		//Doubletap (573,2386)
+		//Doubletap (573,2386)
+		Click (Image:"S6/plugin/Gallery/print", WaitFor:48)
+		(*Click (Image:"S6/plugin/Server Plugin_Icon")
+		if imageFound(Image:"S6/plugin/HPLaserJetMFPM427dw")
+			Click Image:"S6/plugin/HPLaserJetMFPM427dw"
+		end if *)
+		(*	if DefaultPrintSetting is "no"
+			
+			put CommonFunctions_S6.plugin_printsetting
+			
+			//if connectivity is not "GCP"
+			//SelectPrinterPlugin connectivity,printerdetail
+		end if*)
+		(*if DefaultPrintSetting is "no"
+			put CommonFunctions_S6.plugin_printsetting
+		end if*)
+		(*if imageFound(image:"S6/Plugin/Gallery/print_icon1",waitfor:20)
+			click "S6/Plugin/Gallery/print_icon1"
+		end if*)
+		(*else
+		//Doubletap (573,2386)
+			Tap(387,2441)
+			Tap(387,2441)
+			//Tap (573,2386)
+			click "S6/Plugin/Gallery/print_icon"*)
+	end if
+	
+	
+	wait 2
+	(*if Workflow is "PDFs" or Workflow is "DOCs" or Workflow is "PPTs" or Workflow is "XLSs" or Workflow is "TXT"then*)
+	//if imageFound(Image:"S6/Plugin/arrow")
+	(*if ImageFound(5, "S6/Plugin/427dw")
+		Click (Image:"S6/plugin/427dw")
+	else*)
+	click "S6/Plugin/arrow"
+	Click (Image:"S6/plugin/427dw")
+	
+	//SelectPrinterPlugin connectivity,printerdetail
+	
+	waitfor 120,"Collection/PluginPrint"
+	
+	
+	if DefaultPrintSetting is "no"
+		
+		put CommonFunctions_S6.plugin_printsetting
+		
+		//if connectivity is not "GCP"
+		//SelectPrinterPlugin connectivity,printerdetail
+	end if	
+	//end if	
+	
+	
+	
+	log "clicking print"
+	waitfor 30,"Collection/PluginPrint"
+	click "Collection/PluginPrint"
+	log "print clicked"
+	wait 20
+	//if Workflow is not "Photos"
+	//if FileName is not "Landscape"
+	if workflow is "Web"
+		PressBackButton
+		Wait 2
+		PressBackButton
+		Wait 2
+	else
+		PressBackButton
+		Wait 2
+		PressBackButton
+		Wait 2
+		PressHomeButton
+		//else
+		(*wait 20
+			PressBackButton
+			Wait 2
+			PressBackButton
+			Wait 2
+			PressHomeButton
+		end if*)
+	
+		(*	else
+		put CommonFunctions.BackButton*)
+	end if
+	put  "PASS" into execution_status
+	
+	log atrecovery
+	//For report, If attempt recovery is yes then the status has to be overwritten since the exeception is handled
+	if atrecovery is "yes"
+		wait 10
+		put Report.Logoverwritestatus( fname, execution_status,statusid)
+	else
+		put Report.Logstatus( fname, execution_status) into statusid
+		
+	end if
+	
+	//For report, If execution end time is already populated it would need to overwritten
+	if execendtime is "yes"
+		put report.ExecutionOWEndtime (fname,execid)
+	else
+		put report.ExecutionEndtime (fname) into execid
+		//put report.ReportFooter (fname)
+	end if
+	put "yes" into execendtime
+	
+	EndTestCase Name	
+	
+end repeat 
+
+
+
+
+
+
+
+
+

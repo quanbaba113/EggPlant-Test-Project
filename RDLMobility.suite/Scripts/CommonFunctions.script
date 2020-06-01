@@ -1,0 +1,121 @@
+﻿(* CommonFunctions.script
+ *
+ * Description: This script contains generic functions
+ * 
+ * 
+ *****************************************************************
+*CommonFunctions.script*)
+
+// Parse the the main Execution csv and populate to the global variables
+Function workflow_connectivity filepath,lineno
+	global TestExecute,Workflow,ConnectivityPath,NetworkSSID,PrinterDetail
+	put  line lineno of file filepath into data
+	put item 1 of data into TestExecute
+	Log "TestExecute"
+	Log TestExecute
+	put item 2 of data into Workflow
+	Log "Workflow"
+	Log Workflow
+	put item 3 of data into ConnectivityPath
+	Log "ConnectivityPath"
+	Log ConnectivityPath
+	put item 4 of data into NetworkSSID
+	Log "NetworkSSID"
+	Log NetworkSSID
+	put item 5 of data into PrinterDetail
+	Log "PrinterDetail"
+	Log PrinterDetail
+	Log " worflow connectivity details"
+	Log TestExecute,Workflow,ConnectivityPath,NetworkSSID,PrinterDetail
+	return true
+	
+End workflow_connectivity
+
+//Parse the CSV file containing the filename and print settings //and populates the global variables
+Function TestDataParsing filepath,lineno
+	global Devicename, PrinterName,TestExecute,Workflow,Folder,FileName,DefaultPrintSetting,Copies,PaperSize,Quality,Rotate,Resize,Layout,PaperType,PaperRange,TwoSided,Orientation,Color		
+	put  line lineno of file filepath into data
+	
+	log "data"
+	log data
+	put item 1 of data into Devicename //S3 ,S4,S6
+	Log "Devicename"
+	Log Devicename
+	put item 2 of data into PrinterName //eg YellowTail
+	Log "PrinterName"
+	Log PrinterName
+	put item 3 of data into TestExecute
+	Log "TestExecute"
+	Log TestExecute
+	put item 4 of data into Workflow
+	Log "Workflow"
+	Log Workflow
+	put item 5 of data into Folder
+	Log "Folder"
+	Log Folder
+	put item 6 of data into FileName
+	Log "FileName"
+	Log FileName
+	put item 7 of data into DefaultPrintSetting
+	Log "DefaultPrintSetting"
+	Log DefaultPrintSetting
+	put item 8 of data into Copies
+	Log "Copies"
+	Log Copies
+	put item 9 of data into PaperSize
+	Log PaperSize
+	put item 10 of data into Quality
+	Log Quality
+	put item 11 of data into Rotate
+	Log "Rotate"
+	Log Rotate
+	put item 12 of data into Resize
+	Log "Resize"
+	Log Resize
+	put item 13 of data into Layout
+	Log "Layout"
+	Log Layout
+	put item 14 of data into PaperType
+	Log PaperType
+	put item 15 of data into PaperRange
+	Log PaperRange
+	put item 16 of data into TwoSided
+	Log TwoSided
+	put item 17 of data into Orientation
+	Log Orientation
+	put item 18 of data into Color
+	Log Color
+	Log "inside testdata parsing"
+	Log FileName
+	return true
+End TestDataParsing
+
+// Frame testcase name based on parameters passed
+Function GetTestCaseName Connectivity,PrinterName,DeviceName,AppName,Workflow,FileName
+
+	put Connectivity&"_"&PrinterName & DeviceName & AppName & Workflow & FileName into testcasename
+	log testcasename
+	return testcasename
+	
+End GetTestCaseName
+
+// Click the filename else swipe up until found
+function filetype filename
+
+	repeat forever
+		if imagefound(text:filename)
+			log filename
+			//click(text:"test1")
+			click (text:filename)
+			exit repeat
+		else 
+			swipeup
+			swipeup
+		end if
+	end repeat
+	
+	return true
+end filetype
+
+
+
